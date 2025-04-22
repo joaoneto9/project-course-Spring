@@ -1,13 +1,18 @@
 package com.joao.neto.ufcg.course.entities;
 
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
+@Table(name = "tb_user") // como "User" ja e uma palavra reservada para o Banco H2, portanto e bom mudar o nome da tabela para nao gerar conflito
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String email;
