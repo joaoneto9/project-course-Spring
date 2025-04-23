@@ -1,10 +1,12 @@
 package com.joao.neto.ufcg.course.resources;
 
+import com.joao.neto.ufcg.course.Services.UserService;
 import com.joao.neto.ufcg.course.entities.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,13 +17,12 @@ import java.util.List;
 @RequestMapping(value = "/users") // mapeia, nomeiando o Local
 public class UserResource {
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping // responde a requisicao GET http.
-    public List<ResponseEntity<User>> findAllUsers() {
-        List<ResponseEntity<User>> lista = new ArrayList<>();
-        User u = new User(1, "joao", "joao@gmail", "99999", "1234");
-        lista.add(ResponseEntity.ok().body(u));
-        lista.add(ResponseEntity.ok().body(new User(2, "barbara", "barabara@gmail.com", "98900809", "2222")));
-        return lista; // retorna o Body desse User "u"
+    public ResponseEntity<List<User>> findAllUsers() {
+        return ResponseEntity.ok().body(userService.findAll()); // retorna um body em Json de uma Lista de Users
     }
 
 }
