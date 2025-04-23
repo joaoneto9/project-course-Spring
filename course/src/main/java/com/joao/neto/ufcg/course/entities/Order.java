@@ -1,6 +1,5 @@
 package com.joao.neto.ufcg.course.entities;
 
-import ch.qos.logback.core.net.server.Client;
 import jakarta.persistence.*;
 
 import java.io.Serializable;

@@ -1,5 +1,6 @@
 package com.joao.neto.ufcg.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -22,6 +23,7 @@ public class User implements Serializable {
     private String password;
 
     @OneToMany(mappedBy = "client")
+    @JsonIgnore // igonora sua represenatacao ao gerar um ResponseEntity em Json desse Atributo
     private List<Order> orders = new ArrayList<>(); // inicia sem pedidos.
 
     public User() {}
