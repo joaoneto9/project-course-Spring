@@ -16,7 +16,7 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Instant date;
-    private OrderStatus status;
+    private OrderStatus status = OrderStatus.WAITING_PAYMENT;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -26,10 +26,9 @@ public class Order implements Serializable {
 
     }
 
-    public Order(Long id, Instant date, OrderStatus status, User client) {
+    public Order(Long id, Instant date, User client) {
         this.id = id;
         this.date = date;
-        this.status = status;
         this.client = client;
     }
 

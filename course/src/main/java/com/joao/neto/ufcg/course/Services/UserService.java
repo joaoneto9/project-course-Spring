@@ -25,7 +25,7 @@ public class UserService {
 
     public boolean removeUserById(Long id) {
 
-        if (!userRepository.findById(id).isPresent())
+        if (userRepository.findById(id).isEmpty())
             return false;
 
         userRepository.deleteById(id);
@@ -37,7 +37,7 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        if (!userRepository.findById(id).isPresent())
+        if (userRepository.findById(id).isEmpty())
             return null;
         return userRepository.findById(id).get();
     }
