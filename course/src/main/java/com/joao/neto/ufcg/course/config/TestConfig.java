@@ -1,8 +1,12 @@
 package com.joao.neto.ufcg.course.config;
 
+import com.joao.neto.ufcg.course.entities.Category;
 import com.joao.neto.ufcg.course.entities.Order;
+import com.joao.neto.ufcg.course.entities.Product;
 import com.joao.neto.ufcg.course.entities.User;
+import com.joao.neto.ufcg.course.repositories.CategoryRepository;
 import com.joao.neto.ufcg.course.repositories.OrderRepository;
+import com.joao.neto.ufcg.course.repositories.ProductRepository;
 import com.joao.neto.ufcg.course.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,6 +19,12 @@ import java.util.Arrays;
 @Configuration // determina que euma classe de configuracao
 @Profile("test") // setermina que e apenas teste
 public class TestConfig implements CommandLineRunner {
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -30,8 +40,22 @@ public class TestConfig implements CommandLineRunner {
         Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), u1);
         Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), u2);
         Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), u1);
+
+        Category cat1 = new Category(null, "Electronics");
+        Category cat2 = new Category(null, "Books");
+        Category cat3 = new Category(null, "Computers");
+
+        Product p1 = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, "", cat1);
+        Product p2 = new Product(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "", cat1);
+        Product p3 = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "", cat2);
+        Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "", cat3);
+        Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "", cat2);
+
+
         userRepository.saveAll(Arrays.asList(u1, u2)); // salva todas essas intancias no banco quando iniciar a aplicacao.
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+        categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+        productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
     }
 
 
