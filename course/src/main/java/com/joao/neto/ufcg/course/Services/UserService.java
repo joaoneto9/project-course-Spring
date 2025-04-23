@@ -16,24 +16,30 @@ public class UserService {
 
     public boolean saveUser(User user) {
 
-        if (userRepository.findById(user.getId()).isPresent())
+        if (userRepository.findByEmail(user.getEmail()).isPresent())
             return false;
 
         userRepository.save(user);
         return true;
     }
 
-    public boolean removeUser(User user) {
+    public boolean removeUserById(Long id) {
 
-        if (!userRepository.findById(user.getId()).isPresent())
+        if (!userRepository.findById(id).isPresent())
             return false;
 
-        userRepository.delete(user);
+        userRepository.deleteById(id);
         return true;
     }
 
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    public User findById(Long id) {
+        if (!userRepository.findById(id).isPresent())
+            return null;
+        return userRepository.findById(id).get();
     }
 
 }
