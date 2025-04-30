@@ -4,7 +4,6 @@ import com.joao.neto.ufcg.course.Services.ProductService;
 import com.joao.neto.ufcg.course.entities.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
