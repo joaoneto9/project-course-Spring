@@ -1,8 +1,10 @@
 package com.joao.neto.ufcg.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -28,6 +30,9 @@ public class Product {
             inverseJoinColumns = @JoinColumn(name = "category_id") // cahve estrangeira que faz parte da relacaco mas nao e a prorpia entidade
     )
     private Set<Category> categories = new HashSet<>();
+
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> items = new HashSet<>();
 
     public Product() {
     }
@@ -109,5 +114,10 @@ public class Product {
 
     public Set<Category> getCategory() {
         return categories;
+    }
+
+    @JsonIgnore
+    public List<Order> getOrders() {
+        return items.stream().map(OrderItem::getOrder).toList();
     }
 }
