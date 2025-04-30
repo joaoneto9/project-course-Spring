@@ -2,7 +2,9 @@ package com.joao.neto.ufcg.course.entities;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_product")
@@ -19,22 +21,25 @@ public class Product {
     private double price;
     private String imgUrl;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @ManyToMany
+    @JoinTable(
+            name = "tb_product_category",
+            joinColumns =  @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id") // cahve estrangeira que faz parte da relacaco mas nao e a prorpia entidade
+    )
+    private Set<Category> categories = new HashSet<>();
 
     public Product() {
     }
-    public Product(String name, String description, double price, String imgUrl, Category category) {
+    public Product(String name, String description, double price, String imgUrl) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.imgUrl = imgUrl;
-        this.category = category;
     }
 
-    public Product(Long id, String name, String description, double price, String imgUrl, Category category) {
-        this(name, description, price, imgUrl, category);
+    public Product(Long id, String name, String description, double price, String imgUrl) {
+        this(name, description, price, imgUrl);
         this.id = id;
     }
 
@@ -46,7 +51,7 @@ public class Product {
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", imgUrl='" + imgUrl + '\'' +
-                ", category=" + category +
+                ", category=" + categories +
                 '}';
     }
 
@@ -98,11 +103,11 @@ public class Product {
         this.imgUrl = imgUrl;
     }
 
-    public Category getCategory() {
-        return category;
+    public void addCategory(Category category) {
+        categories.add(category);
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public Set<Category> getCategory() {
+        return categories;
     }
 }
