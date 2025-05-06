@@ -19,6 +19,9 @@ public class Order implements Serializable {
     private Instant date;
     private Integer status;
 
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Paymant paymant;
+
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
@@ -73,5 +76,13 @@ public class Order implements Serializable {
 
     public Set<OrderItem> getItems() {
         return items;
+    }
+
+    public Paymant getPaymant() {
+        return paymant;
+    }
+
+    public void setPaymant(Paymant paymant) {
+        this.paymant = paymant;
     }
 }
