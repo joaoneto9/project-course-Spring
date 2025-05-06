@@ -67,6 +67,13 @@ public class TestConfig implements CommandLineRunner {
 
         productRepository.save(p1);
         productRepository.save(p2);
+
+        o1.setStatus(OrderStatus.PAID);
+
+        Paymant paymant1 = new Paymant(null, Instant.parse("2019-06-20T19:53:07Z"), o1);
+
+        o1.setPaymant(paymant1); // ao setar o pagamento e depois salvar, o JPA entende que e para salvar essa entidade no Banco de dados tambem
+        orderRepository.save(o1);
     }
 
 
