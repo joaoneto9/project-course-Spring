@@ -3,6 +3,7 @@ package com.joao.neto.ufcg.course.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
@@ -84,5 +85,11 @@ public class Order implements Serializable {
 
     public void setPaymant(Paymant paymant) {
         this.paymant = paymant;
+    }
+
+    public Double getTotal() {
+        return items.stream()
+                .map(OrderItem::getSubTotal)
+                .reduce(0.0, Double::sum);
     }
 }
